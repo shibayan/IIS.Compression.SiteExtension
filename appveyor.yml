@@ -7,5 +7,13 @@ before_build:
   - nuget restore IIS.Compression\Compression.sln
 
 build_script:
-  - msbuild IIS.Compression\Compression.sln /p:platform=x86 /p:configuration=Release
-  - msbuild IIS.Compression\Compression.sln /p:platform=x64 /p:configuration=Release
+  - msbuild IIS.Compression\Compression.sln /p:platform=x86 /p:configuration=Release /v:m
+  - msbuild IIS.Compression\Compression.sln /p:platform=x64 /p:configuration=Release /v:m
+
+after_build:
+  - xcopy .\IIS.Compression\bin\Release\x86\* .\build\32bit\ /I
+  - xcopy .\IIS.Compression\bin\Release\x64\* .\build\64bit\ /I
+  - nuget pack .\IIS.Compression.SiteExtension.nuspec -BasePath .\build -OutputDirectory .\
+
+artifacts:
+  - path: '*.nupkg'

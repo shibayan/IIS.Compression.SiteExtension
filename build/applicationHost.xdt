@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration xmlns:xdt="http://schemas.microsoft.com/XML-Document-Transform">
+  <system.webServer>
+    <httpCompression>
+      <scheme name="br" xdt:Locator="Match(name)" xdt:Transform="Remove" />
+      <scheme name="gzip" xdt:Locator="Match(name)" xdt:Transform="Remove" />
+      <scheme name="br" dll="%XDT_EXTENSIONPATH%\%XDT_BITNESS%\iisbrotli.dll" xdt:Transform="Insert" xdt:Locator="Match(name)" />
+      <scheme name="gzip" dll="%XDT_EXTENSIONPATH%\%XDT_BITNESS%\iiszlib.dll" xdt:Transform="Insert" xdt:Locator="Match(name)" />
+    </httpCompression>
+    <rewrite>
+      <allowedServerVariables>
+        <add name="HTTP_ACCEPT_ENCODING" xdt:Transform="InsertIfMissing" />
+      </allowedServerVariables>
+      <rules>
+        <rule name="Prioritize Brotli" xdt:Transform="InsertIfMissing" xdt:Locator="Match(name)">
+          <match url=".*" />
+          <conditions>
+            <add input="{HTTP_ACCEPT_ENCODING}" pattern="\bbr(?!;q=0)\b" />
+          </conditions>
+          <serverVariables>
+            <set name="HTTP_ACCEPT_ENCODING" value="br" />
+          </serverVariables>
+        </rule>
+      </rules>
+    </rewrite>
+  </system.webServer>
+</configuration>
