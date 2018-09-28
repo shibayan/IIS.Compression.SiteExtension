@@ -3,8 +3,7 @@ version: "{build}"
 image: Visual Studio 2017
 
 before_build:
-  - git submodule init
-  - git submodule update
+  - git submodule update --init --recursive
   - nuget restore IIS.Compression\Compression.sln
 
 build_script:
