@@ -1,0 +1,18 @@
+version: {build}
+
+image: Visual Studio 2017
+
+platform:
+  - x86
+  - x64
+
+configuration:
+  - Release
+
+before_build:
+  - git submodule init
+  - git submodule update
+  - nuget restore IIS.Compression\Compression.sln
+
+build:
+  project: IIS.Compression\Compression.sln
