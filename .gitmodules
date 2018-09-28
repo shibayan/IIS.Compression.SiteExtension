@@ -1,0 +1,3 @@
+[submodule "IIS.Compression"]
+	path = IIS.Compression
+	url = https://github.com/Microsoft/IIS.Compression.git
