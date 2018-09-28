@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
     <metadata>
         <id>IIS.Compression.SiteExtension</id>
-        <title>IIS.Compression.SiteExtension</title>
+        <title>IIS.Compression Site Extension</title>
         <version>1.0.0</version>
         <authors>Microsoft</authors>
         <licenseUrl>https://github.com/Microsoft/IIS.Compression/blob/master/LICENSE</licenseUrl>
