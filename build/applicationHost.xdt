@@ -4,7 +4,7 @@
     <httpCompression>
       <scheme name="br" xdt:Locator="Match(name)" xdt:Transform="Remove" />
       <scheme name="gzip" xdt:Locator="Match(name)" xdt:Transform="Remove" />
-      <scheme name="br" dll="%XDT_EXTENSIONPATH%\%XDT_BITNESS%\iisbrotli.dll" xdt:Transform="Insert" xdt:Locator="Match(name)" />
+      <scheme name="br" dll="%XDT_EXTENSIONPATH%\%XDT_BITNESS%\iisbrotli.dll" xdt:Transform="Insert" xdt:Locator="Match(name)" dynamicCompressionLevel="4" staticCompressionLevel="11" />
       <scheme name="gzip" dll="%XDT_EXTENSIONPATH%\%XDT_BITNESS%\iiszlib.dll" xdt:Transform="Insert" xdt:Locator="Match(name)" />
     </httpCompression>
     <rewrite>
