@@ -3,7 +3,7 @@
     <metadata>
         <id>IIS.Compression.SiteExtension</id>
         <title>IIS.Compression Site Extension</title>
-        <version>1.0.1</version>
+        <version>1.0.2</version>
         <authors>Microsoft</authors>
         <licenseUrl>https://github.com/Microsoft/IIS.Compression/blob/master/LICENSE</licenseUrl>
         <projectUrl>https://github.com/shibayan/IIS.Compression.SiteExtension</projectUrl>
