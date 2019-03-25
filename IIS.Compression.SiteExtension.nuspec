@@ -3,12 +3,12 @@
     <metadata>
         <id>IIS.Compression.SiteExtension</id>
         <title>IIS.Compression Site Extension</title>
-        <version>1.0.2</version>
+        <version>1.1.0</version>
         <authors>Microsoft</authors>
-        <licenseUrl>https://github.com/Microsoft/IIS.Compression/blob/master/LICENSE</licenseUrl>
+        <license type="expression">MIT</license>
         <projectUrl>https://github.com/shibayan/IIS.Compression.SiteExtension</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>Compression schemes for Microsoft IIS</description>
+        <description>IIS.Compression (better gzip and brotli support) for Azure App Service</description>
         <tags>AzureSiteExtension</tags>
         <packageTypes>
             <packageType name="AzureSiteExtension" />
