@@ -9,7 +9,7 @@
     </httpCompression>
     <rewrite>
       <allowedServerVariables>
-        <add name="HTTP_ACCEPT_ENCODING" xdt:Transform="InsertIfMissing" />
+        <add name="HTTP_ACCEPT_ENCODING" xdt:Transform="InsertIfMissing" xdt:Locator="Match(name)" />
       </allowedServerVariables>
       <rules>
         <rule name="Prioritize Brotli" xdt:Transform="InsertIfMissing" xdt:Locator="Match(name)">
