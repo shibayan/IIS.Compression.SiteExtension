@@ -7,21 +7,25 @@
       <scheme name="br" dll="%XDT_EXTENSIONPATH%\%XDT_BITNESS%\iisbrotli.dll" dynamicCompressionLevel="4" staticCompressionLevel="11" xdt:Transform="Insert" xdt:Locator="Match(name)" />
       <scheme name="gzip" dll="%XDT_EXTENSIONPATH%\%XDT_BITNESS%\iiszlib.dll" dynamicCompressionLevel="4" staticCompressionLevel="9" xdt:Transform="Insert" xdt:Locator="Match(name)" />
     </httpCompression>
-    <rewrite>
-      <allowedServerVariables>
-        <add name="HTTP_ACCEPT_ENCODING" xdt:Transform="InsertIfMissing" />
-      </allowedServerVariables>
-      <rules>
-        <rule name="Prioritize Brotli" xdt:Transform="InsertIfMissing" xdt:Locator="Match(name)">
-          <match url=".*" />
-          <conditions>
-            <add input="{HTTP_ACCEPT_ENCODING}" pattern="\bbr(?!;q=0)\b" />
-          </conditions>
-          <serverVariables>
-            <set name="HTTP_ACCEPT_ENCODING" value="br" />
-          </serverVariables>
-        </rule>
-      </rules>
-    </rewrite>
   </system.webServer>
+  <location path="%XDT_SITENAME%" xdt:Locator="Match(path)">
+    <system.webServer xdt:Transform="InsertIfMissing">
+      <rewrite xdt:Transform="InsertIfMissing">
+        <allowedServerVariables xdt:Transform="InsertIfMissing">
+          <add name="HTTP_ACCEPT_ENCODING" xdt:Transform="InsertIfMissing" xdt:Locator="Match(name)" />
+        </allowedServerVariables>
+        <rules xdt:Transform="InsertIfMissing">
+          <rule name="Prioritize Brotli" xdt:Transform="InsertIfMissing" xdt:Locator="Match(name)">
+            <match url=".*" />
+            <conditions>
+              <add input="{HTTP_ACCEPT_ENCODING}" pattern="\bbr(?!;q=0)\b" />
+            </conditions>
+            <serverVariables>
+              <set name="HTTP_ACCEPT_ENCODING" value="br" />
+            </serverVariables>
+          </rule>
+        </rules>
+      </rewrite>
+    </system.webServer>
+  </location>
 </configuration>
