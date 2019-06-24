@@ -11,9 +11,12 @@ build_script:
   - msbuild IIS.Compression\Compression.sln /p:platform=x64 /p:configuration=Release /v:m
 
 after_build:
-  - xcopy .\IIS.Compression\bin\Release\x86\* .\build\32bit\ /I
-  - xcopy .\IIS.Compression\bin\Release\x64\* .\build\64bit\ /I
-  - nuget pack .\IIS.Compression.SiteExtension.nuspec -BasePath .\build -OutputDirectory .\ -Version %APPVEYOR_REPO_TAG_NAME%
+  - ps: |
+      if ($env:APPVEYOR_REPO_TAG -eq $true) {
+          xcopy .\IIS.Compression\bin\Release\x86\* .\build\32bit\ /I
+          xcopy .\IIS.Compression\bin\Release\x64\* .\build\64bit\ /I
+          nuget pack .\IIS.Compression.SiteExtension.nuspec -BasePath .\build -OutputDirectory .\ -Version $env:APPVEYOR_REPO_TAG_NAME
+      }
 
 artifacts:
   - path: '*.nupkg'
