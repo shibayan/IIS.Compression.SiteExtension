@@ -1,9 +1,11 @@
 version: "{build}"
 
+branches:
+  only:
+    - master
+
 pull_requests:
   do_not_increment_build_number: true
-
-skip_branch_with_pr: true
 
 image: Visual Studio 2017
 
@@ -18,9 +20,21 @@ build_script:
 test: off
 
 after_build:
-  - xcopy .\IIS.Compression\bin\Release\x86\* .\build\32bit\ /I
-  - xcopy .\IIS.Compression\bin\Release\x64\* .\build\64bit\ /I
-  - nuget pack .\IIS.Compression.SiteExtension.nuspec -BasePath .\build -OutputDirectory .\
+  - ps: |
+      if ($env:APPVEYOR_REPO_TAG -eq $true) {
+          xcopy .\IIS.Compression\bin\Release\x86\* .\build\32bit\ /I
+          xcopy .\IIS.Compression\bin\Release\x64\* .\build\64bit\ /I
+          nuget pack .\IIS.Compression.SiteExtension.nuspec -BasePath .\build -OutputDirectory .\ -Version $env:APPVEYOR_REPO_TAG_NAME
+      }
 
 artifacts:
   - path: '*.nupkg'
+
+deploy:
+  provider: NuGet
+  api_key:
+    secure: z8WTDEqftESoalyJXT6Fta22vbcgwZ2M9FXLpU4KnAEtcsXbQVpoNURDBk0W8b6S
+  skip_symbols: true
+  artifact: /.*\.nupkg/
+  on:
+    appveyor_repo_tag: true
