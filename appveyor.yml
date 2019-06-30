@@ -14,8 +14,10 @@ before_build:
   - nuget restore IIS.Compression\Compression.sln
 
 build_script:
-  - msbuild IIS.Compression\Compression.sln /p:platform=x86 /p:configuration=Release /v:m
-  - msbuild IIS.Compression\Compression.sln /p:platform=x64 /p:configuration=Release /v:m
+  - msbuild IIS.Compression\iiszlib\iiszlib.vcxproj /p:platform=x86 /p:configuration=Release /v:m
+  - msbuild IIS.Compression\iiszlib\iiszlib.vcxproj /p:platform=x64 /p:configuration=Release /v:m
+  - msbuild IIS.Compression\iisbrotli\iisbrotli.vcxproj /p:platform=x86 /p:configuration=Release /v:m
+  - msbuild IIS.Compression\iisbrotli\iisbrotli.vcxproj /p:platform=x64 /p:configuration=Release /v:m
 
 test: off
 
