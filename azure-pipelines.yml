@@ -68,6 +68,7 @@ stages:
 
     - publish: dist
       artifact: nupkg
+      condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/v')
 
 - stage: Publish
   dependsOn:
