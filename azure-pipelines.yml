@@ -12,12 +12,12 @@ steps:
   displayName: 'nuget restore'
   inputs:
     command: 'restore'
-    restoreSolution: '**/*.sln'
+    restoreSolution: 'IIS.Compression\Compression.sln'
 
 - task: MSBuild@1
   displayName: 'Build x86'
   inputs:
-    solution: '**/*.sln'
+    solution: 'IIS.Compression\Compression.sln'
     platform: 'x86'
     configuration: 'Release'
     msbuildArguments: '/v:m'
@@ -25,7 +25,7 @@ steps:
 - task: MSBuild@1
   displayName: 'Build x64'
   inputs:
-    solution: '**/*.sln'
+    solution: 'IIS.Compression\Compression.sln'
     platform: 'x64'
     configuration: 'Release'
     msbuildArguments: '/v:m'
