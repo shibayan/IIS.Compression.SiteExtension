@@ -52,6 +52,7 @@ stages:
 
     - powershell: 'echo "##vso[task.setvariable variable=PackageVersion]$($env:Build_SourceBranchName.Substring(1))"'
       displayName: 'PowerShell Script'
+      condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/v')
 
     - task: NuGetCommand@2
       displayName: 'Pack NuGet'
