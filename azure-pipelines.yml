@@ -6,14 +6,16 @@ pool:
 
 steps:
 - checkout: self
-  submodules: true
+  submodules: recursive
 
 - task: NuGetCommand@2
+  displayName: 'nuget restore'
   inputs:
     command: 'restore'
     restoreSolution: '**/*.sln'
 
 - task: MSBuild@1
+  displayName: 'Build x86'
   inputs:
     solution: '**/*.sln'
     platform: 'x86'
@@ -21,8 +23,15 @@ steps:
     msbuildArguments: '/v:m'
 
 - task: MSBuild@1
+  displayName: 'Build x64'
   inputs:
     solution: '**/*.sln'
     platform: 'x64'
     configuration: 'Release'
     msbuildArguments: '/v:m'
+
+- script: |
+    xcopy .\IIS.Compression\bin\Release\x86\* .\build\32bit\ /I
+    xcopy .\IIS.Compression\bin\Release\x64\* .\build\64bit\ /I
+    nuget pack .\IIS.Compression.SiteExtension.nuspec -BasePath .\build -OutputDirectory .\
+  displayName: 'pack nuget'
