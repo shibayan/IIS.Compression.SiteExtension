@@ -13,6 +13,7 @@ steps:
   inputs:
     command: 'restore'
     restoreSolution: 'IIS.Compression\Compression.sln'
+    verbosityPack: 'Normal'
 
 - task: MSBuild@1
   displayName: 'Build x86'
@@ -33,5 +34,13 @@ steps:
 - script: |
     xcopy .\IIS.Compression\bin\Release\x86\* .\build\32bit\ /I
     xcopy .\IIS.Compression\bin\Release\x64\* .\build\64bit\ /I
-    nuget pack .\IIS.Compression.SiteExtension.nuspec -BasePath .\build -OutputDirectory .\
-  displayName: 'pack nuget'
+  displayName: 'Copy build artifacts'
+
+- task: NuGetCommand@2
+  inputs:
+    command: 'pack'
+    packagesToPack: '.\IIS.Compression.SiteExtension.nuspec'
+    packDestination: '$(System.DefaultWorkingDirectory)/dist'
+    versioningScheme: 'off'
+    basePath: '.\build'
+    verbosityPack: 'Normal'
