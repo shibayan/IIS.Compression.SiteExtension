@@ -9,6 +9,7 @@ steps:
   submodules: recursive
 
 - task: NuGetToolInstaller@1
+  displayName: 'Install NuGet CLI'
   inputs:
     versionSpec: '5.0.2'
 
@@ -41,6 +42,7 @@ steps:
   displayName: 'Copy build artifacts'
 
 - task: NuGetCommand@2
+  displayName: 'Pack NuGet'
   inputs:
     command: 'pack'
     packagesToPack: '.\IIS.Compression.SiteExtension.nuspec'
@@ -48,3 +50,6 @@ steps:
     versioningScheme: 'off'
     basePath: '.\build'
     verbosityPack: 'Normal'
+
+- publish: dist
+  artifact: nupkg
