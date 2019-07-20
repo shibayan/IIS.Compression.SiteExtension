@@ -8,6 +8,10 @@ steps:
 - checkout: self
   submodules: recursive
 
+- task: NuGetToolInstaller@1
+  inputs:
+    versionSpec: '5.0.2'
+
 - task: NuGetCommand@2
   displayName: 'nuget restore'
   inputs:
