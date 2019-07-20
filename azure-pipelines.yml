@@ -1,0 +1,55 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'vs2017-win2016'
+
+steps:
+- checkout: self
+  submodules: recursive
+
+- task: NuGetToolInstaller@1
+  displayName: 'Install NuGet CLI'
+  inputs:
+    versionSpec: '5.0.2'
+
+- task: NuGetCommand@2
+  displayName: 'nuget restore'
+  inputs:
+    command: 'restore'
+    restoreSolution: 'IIS.Compression\Compression.sln'
+    verbosityPack: 'Normal'
+
+- task: MSBuild@1
+  displayName: 'Build x86'
+  inputs:
+    solution: 'IIS.Compression\Compression.sln'
+    platform: 'x86'
+    configuration: 'Release'
+    msbuildArguments: '/v:m'
+
+- task: MSBuild@1
+  displayName: 'Build x64'
+  inputs:
+    solution: 'IIS.Compression\Compression.sln'
+    platform: 'x64'
+    configuration: 'Release'
+    msbuildArguments: '/v:m'
+
+- script: |
+    xcopy .\IIS.Compression\bin\Release\x86\* .\build\32bit\ /I
+    xcopy .\IIS.Compression\bin\Release\x64\* .\build\64bit\ /I
+  displayName: 'Copy build artifacts'
+
+- task: NuGetCommand@2
+  displayName: 'Pack NuGet'
+  inputs:
+    command: 'pack'
+    packagesToPack: '.\IIS.Compression.SiteExtension.nuspec'
+    packDestination: '$(System.DefaultWorkingDirectory)/dist'
+    versioningScheme: 'off'
+    basePath: '.\build'
+    verbosityPack: 'Normal'
+
+- publish: dist
+  artifact: nupkg
