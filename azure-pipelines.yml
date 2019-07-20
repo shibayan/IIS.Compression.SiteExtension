@@ -5,10 +5,24 @@ pool:
   vmImage: 'windows-2019'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- checkout: self
+  submodules: true
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: NuGetCommand@2
+  inputs:
+    command: 'restore'
+    restoreSolution: '**/*.sln'
+
+- task: MSBuild@1
+  inputs:
+    solution: '**/*.sln'
+    platform: 'x86'
+    configuration: 'Release'
+    msbuildArguments: '/v:m'
+
+- task: MSBuild@1
+  inputs:
+    solution: '**/*.sln'
+    platform: 'x64'
+    configuration: 'Release'
+    msbuildArguments: '/v:m'
