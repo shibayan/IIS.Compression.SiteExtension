@@ -13,6 +13,9 @@ stages:
     pool:
       vmImage: 'vs2017-win2016'
     steps:
+    - checkout: self
+      submodules: recursive
+
     - task: NuGetToolInstaller@1
       displayName: 'Install NuGet CLI'
       inputs:
@@ -57,7 +60,7 @@ stages:
       inputs:
         command: 'pack'
         packagesToPack: '.\IIS.Compression.SiteExtension.nuspec'
-        packDestination: '$(System.DefaultWorkingDirectory)/dist'
+        packDestination: 'dist'
         versioningScheme: byEnvVar
         versionEnvVar: PackageVersion
         basePath: '.\build'
