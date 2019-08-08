@@ -13,13 +13,10 @@ stages:
     pool:
       vmImage: 'vs2017-win2016'
     steps:
-    - checkout: self
-      submodules: recursive
-
     - task: NuGetToolInstaller@1
       displayName: 'Install NuGet CLI'
       inputs:
-        versionSpec: '5.0.2'
+        versionSpec: '5.0.x'
 
     - task: NuGetCommand@2
       displayName: 'nuget restore'
