@@ -6,6 +6,9 @@ trigger:
     include:
     - v*
 
+variables:
+  isGitHubTag: $[startsWith(variables['Build.SourceBranch'], 'refs/tags/v')]
+
 stages:
 - stage: Build
   jobs:
@@ -19,7 +22,7 @@ stages:
     - task: NuGetToolInstaller@1
       displayName: 'Install NuGet CLI'
       inputs:
-        versionSpec: '5.0.2'
+        versionSpec: '5.x'
 
     - task: NuGetCommand@2
       displayName: 'nuget restore'
@@ -47,20 +50,19 @@ stages:
     - script: |
         xcopy .\IIS.Compression\bin\Release\x86\* .\build\32bit\ /I
         xcopy .\IIS.Compression\bin\Release\x64\* .\build\64bit\ /I
-      condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/v')
       displayName: 'Copy build artifacts'
 
     - powershell: 'echo "##vso[task.setvariable variable=PackageVersion]$($env:Build_SourceBranchName.Substring(1))"'
       displayName: 'PowerShell Script'
-      condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/v')
+      condition: eq(variables['isGitHubTag'], 'true')
 
     - task: NuGetCommand@2
       displayName: 'Pack NuGet'
-      condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/v')
+      condition: eq(variables['isGitHubTag'], 'true')
       inputs:
         command: 'pack'
         packagesToPack: '.\IIS.Compression.SiteExtension.nuspec'
-        packDestination: '$(System.DefaultWorkingDirectory)/dist'
+        packDestination: 'dist'
         versioningScheme: byEnvVar
         versionEnvVar: PackageVersion
         basePath: '.\build'
@@ -68,12 +70,12 @@ stages:
 
     - publish: dist
       artifact: nupkg
-      condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/v')
+      condition: eq(variables['isGitHubTag'], 'true')
 
 - stage: Publish
   dependsOn:
   - Build
-  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
+  condition: and(succeeded(), eq(variables['isGitHubTag'], 'true'))
   jobs:
   - deployment: Publish_Nupkg
     environment: nuget
