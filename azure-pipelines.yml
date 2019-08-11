@@ -56,12 +56,9 @@ stages:
       displayName: 'PowerShell Script'
       condition: eq(variables['isGitHubTag'], 'true')
 
-    - powershell: 'echo "##vso[task.setvariable variable=PackageVersion]1.0.0-ci-$env:Build_BuildNumber"'
-      displayName: 'PowerShell Script'
-      condition: eq(variables['isGitHubTag'], 'false')
-
     - task: NuGetCommand@2
       displayName: 'Pack NuGet'
+      condition: eq(variables['isGitHubTag'], 'true')
       inputs:
         command: 'pack'
         packagesToPack: '.\IIS.Compression.SiteExtension.nuspec'
@@ -73,6 +70,7 @@ stages:
 
     - publish: dist
       artifact: nupkg
+      condition: eq(variables['isGitHubTag'], 'true')
 
 - stage: Publish
   dependsOn:
