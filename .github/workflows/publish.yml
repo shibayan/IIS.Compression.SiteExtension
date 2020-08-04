@@ -12,6 +12,9 @@ jobs:
       with:
         submodules: 'recursive'
 
+    - name: Setup MSBuild 16
+      uses: microsoft/setup-msbuild@v1
+
     - name: Install NuGet CLI
       uses: nuget/setup-nuget@v1
       with:
