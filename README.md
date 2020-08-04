@@ -1,6 +1,6 @@
 # IIS.Compression.SiteExtension
 
-[![Build Status](https://dev.azure.com/shibayan/IIS.Compression.SiteExtension/_apis/build/status/Build%20IIS.Compression.SiteExtension?branchName=master)](https://dev.azure.com/shibayan/IIS.Compression.SiteExtension/_build/latest?definitionId=24&branchName=master)
+![Build](https://github.com/shibayan/IIS.Compression.SiteExtension/workflows/Build/badge.svg)
 [![License](https://img.shields.io/github/license/shibayan/IIS.Compression.SiteExtension.svg)](https://github.com/shibayan/IIS.Compression.SiteExtension/blob/master/LICENSE)
 [![NuGet](https://img.shields.io/nuget/v/IIS.Compression.SiteExtension.svg)](https://www.nuget.org/packages/IIS.Compression.SiteExtension)
 
