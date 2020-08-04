@@ -8,13 +8,13 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-2016
     steps:
     - uses: actions/checkout@v2
       with:
         submodules: 'recursive'
 
-    - name: Setup MSBuild 16
+    - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1
 
     - name: Install NuGet CLI
