@@ -1,0 +1,47 @@
+name: Publish
+
+on:
+  push:
+    tags: [ v* ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1
+
+    - name: Install NuGet CLI
+      uses: nuget/setup-nuget@v1
+      with:
+        nuget-api-key: ${{ secrets.NUGET_API_KEY }}
+        nuget-version: '5.x'
+
+    - name: Restore NuGet packages
+      run: nuget restore .\IIS.Compression\Compression.sln
+
+    - name: Build IIS.Compression (x86)
+      run: msbuild .\IIS.Compression\Compression.sln /p:Platform=x86 /p:Configuration=Release /v:m
+
+    - name: Build IIS.Compression (x64)
+      run: msbuild .\IIS.Compression\Compression.sln /p:Platform=x64 /p:Configuration=Release /v:m
+
+    - name: Copy artifacts
+      run: |
+        xcopy .\IIS.Compression\bin\Release\x86\* .\build\32bit\ /I
+        xcopy .\IIS.Compression\bin\Release\x64\* .\build\64bit\ /I
+
+    - name: Setup Version
+      id: setup_version
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\/v/}
+      shell: bash
+
+    - name: Pack NuGet package
+      run: nuget pack .\IIS.Compression.SiteExtension.nuspec -BasePath .\build -OutputDirectory .\dist -Version ${{ steps.setup_version.outputs.VERSION }}
+
+    - name: Push NuGet package
+      run: nuget push .\dist\*.nupkg

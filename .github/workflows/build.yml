@@ -1,0 +1,29 @@
+name: Build
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'recursive'
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1
+
+    - name: Install NuGet CLI
+      uses: nuget/setup-nuget@v1
+      with:
+        nuget-version: '5.x'
+
+    - name: Restore NuGet packages
+      run: nuget restore .\IIS.Compression\Compression.sln
+
+    - name: Build IIS.Compression (x86)
+      run: msbuild IIS.Compression\Compression.sln /p:Platform=x86 /p:Configuration=Release /v:m
