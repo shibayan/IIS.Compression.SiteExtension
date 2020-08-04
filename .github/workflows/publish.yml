@@ -17,13 +17,13 @@ jobs:
         nuget-version: '5.x'
 
     - name: Restore NuGet packages
-      run: nuget restore IIS.Compression\Compression.sln
+      run: nuget restore .\IIS.Compression\Compression.sln
 
     - name: Build IIS.Compression (x86)
-      run: msbuild IIS.Compression\Compression.sln /p:Platform=x86 /p:Configuration=Release /v:m
+      run: msbuild .\IIS.Compression\Compression.sln /p:Platform=x86 /p:Configuration=Release /v:m
 
     - name: Build IIS.Compression (x64)
-      run: msbuild IIS.Compression\Compression.sln /p:Platform=x64 /p:Configuration=Release /v:m
+      run: msbuild .\IIS.Compression\Compression.sln /p:Platform=x64 /p:Configuration=Release /v:m
 
     - name: Copy artifacts
       run: |
