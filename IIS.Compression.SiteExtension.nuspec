@@ -1,20 +1,20 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
-    <metadata>
-        <id>IIS.Compression.SiteExtension</id>
-        <title>IIS.Compression Site Extension</title>
-        <version>1.0.0</version>
-        <authors>Microsoft,shibayan</authors>
-        <license type="expression">MIT</license>
-        <projectUrl>https://github.com/shibayan/IIS.Compression.SiteExtension</projectUrl>
-        <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>IIS.Compression (better gzip and brotli support) for Azure App Service</description>
-        <tags>AzureSiteExtension</tags>
-        <packageTypes>
-            <packageType name="AzureSiteExtension" />
-        </packageTypes>
-    </metadata>
-    <files>
-        <file src="**\*.*" target="content" />
-    </files>
+  <metadata>
+    <id>IIS.Compression.SiteExtension</id>
+    <title>IIS.Compression Site Extension</title>
+    <version>1.0.0</version>
+    <authors>Microsoft,shibayan</authors>
+    <license type="expression">MIT</license>
+    <repository type="git" url="https://github.com/shibayan/IIS.Compression.SiteExtension" />
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>IIS.Compression (better gzip and brotli support) for Azure App Service</description>
+    <tags>AzureSiteExtension</tags>
+    <packageTypes>
+      <packageType name="AzureSiteExtension" />
+    </packageTypes>
+  </metadata>
+  <files>
+    <file src="**\*.*" target="content" />
+  </files>
 </package>
